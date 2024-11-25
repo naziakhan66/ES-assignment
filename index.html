@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <script>
+//Q1: Write a function that uses both var, let, and const to create three variable with different scoping. Use a template literal to return a string explaining the scopes of each variable. Test this function and print the result.
+
+
+function demonstrateScopes() {
+    
+        var varScoped = "I'm scoped to the function or global context.";
+        let letScoped = "I'm block-scoped and only accessible within this block.";
+        const constScoped = "I'm block-scoped too, and my value cannot be reassigned.";
+    
+    // Constructing the explanation string
+    const explanation = `
+        The variable declared with "var" is accessible here: ${varScoped}.
+        The variable declared with "let" is NOT accessible here; accessing "letScoped" would throw an error.
+        The variable declared with "const" is also NOT accessible here; accessing "constScoped" would throw an error.
+    `;
+    return explanation;
+}
+
+
+console.log(demonstrateScopes());
+
+
+//Q2:Create a function called createMultiplier that takes a single parameter
+ //multiplier. This function should return another function that takes a number as input and returns that number multiplied by the original multiplier.
+//Demonstrate this closure by creating functions like double and triple using
+//createMultiplier and calling them with different numbers.
+
+
+function createMultiplier(multiplier) {
+return function (number) {
+    return number *multiplier
+}
+
+}
+
+const double = createMultiplier(2);
+const triple = createMultiplier(3);
+
+console.log(double(5));
+console.log(triple(3));
+
+//Q3: Create a function that accepts an object with properties name, age, country,and city.Destructure these properties in the function parameters and setdefault values for country and city. The function should return a string using the destructured values with template literals.
+
+
+function formatUserInfo({ name, age, country = "Unknown", city = "Unknown" }) {
+    return `Name: ${name}, Age: ${age}, Country: ${country}, City: ${city}`;
+}
+
+// Example usage
+const user1 = { name: "Alice", age: 25, country: "USA", city: "New York" };
+const user2 = { name: "Bob", age: 30 }; // Country and city are not provided
+const user3 = { name: "Charlie", age: 40, country: "UK" }; // City is not provided
+
+console.log(formatUserInfo(user1)); 
+console.log(formatUserInfo(user2)); 
+console.log(formatUserInfo(user3)); 
+
+//Q4:Write a function called calculateTotal that takes a price and a variablenumber of discounts as arguments (use rest parameters). Subtract each discountfrom the price using the spread operator and return the final discounted price.
+
+
+function calculateTotal(price, ...discounts) {
+    // Subtract each discount from the price
+    for (let discount of discounts) {
+        price -= discount;
+    }
+    return price;
+}
+
+// Example usage
+const total1 = calculateTotal(100, 10, 5); // 100 - 10 - 5 = 85
+const total2 = calculateTotal(200, 20, 15, 10); // 200 - 20 - 15 - 10 = 155
+const total3 = calculateTotal(50); // No discounts applied, remains 50
+
+console.log(total1); // 85
+console.log(total2); // 155
+console.log(total3); // 50
+
+//Q5:Create an object calculator that has two methods: add and subtract.Use enhanced object literals and arrow functions to define these methods. Each method should take two numbers and return the result. Test these methods by calling them with different numbers.
+
+const calculator = {
+    add: (a, b) => a + b,
+    subtract: (a, b) => a - b,
+};
+
+// Testing the methods
+console.log(calculator.add(5, 3));       
+console.log(calculator.add(10, 20));    
+console.log(calculator.subtract(10, 5)); 
+console.log(calculator.subtract(20, 25));
+
+//Q6:Create an array of objects representing books with properties title, author,and year Published. Write a function that uses a for..of loop to iterate over this array and logs each book's information in a formatted string.
+
+// Array of book objects
+const books = [
+    { title: "To Kill a Mockingbird", author: "Harper Lee", yearPublished: 1960 },
+    { title: "1984", author: "George Orwell", yearPublished: 1949 },
+    { title: "Pride and Prejudice", author: "Jane Austen", yearPublished: 1813 },
+    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", yearPublished: 1925 }
+];
+
+// Function to log book information
+function logBooks(bookArray) {
+    for (const book of bookArray) {
+        console.log(`Title: "${book.title}", Author: ${book.author}, Year Published: ${book.yearPublished}`);
+    }
+}
+
+// Call the function
+logBooks(books);
+
+//Q7:Write a generator function called idGenerator that generates unique IDsstarting from 1. Call this generator multiple times to get unique IDs and print them.
+
+// Generator function to create unique IDs
+function* idGenerator() {
+    let id = 1; // Start from 1
+    while (true) {
+        yield id++;
+    }
+}
+
+// Create an instance of the generator
+const generateId = idGenerator();
+
+// Generate and print unique IDs
+console.log(generateId.next().value); // 1
+console.log(generateId.next().value); // 2
+console.log(generateId.next().value); // 3
+console.log(generateId.next().value); // 4
+console.log(generateId.next().value); // 5
+
+//Q9:Create an object student with properties name, age, grade, and subjects an array of subjects). Use a for..in loop to iterate over the properties of the object and log each property and its value.
+
+// Object representing a student
+const student = {
+    name: "John Doe",
+    age: 16,
+    grade: "10th",
+    subjects: ["Math", "Science", "History", "English"]
+};
+
+// Using for..in loop to iterate over the properties
+for (const property in student) {
+    console.log(`${property}: ${student[property]}`);
+}
+
+//Q10:10.Given an array of numbers, use the map method to create a new array where each element is the square of the original array elements. Print both the original and the modified array. let numbers = [1, 2, 3, 4];
+
+
+let numbers = [1, 2, 3, 4];
+
+// Use map to create a new array with squared values
+let squaredNumbers = numbers.map(num => num * num);
+
+// Print the original and the modified array
+console.log("Original Array:", numbers);
+console.log("Squared Array:", squaredNumbers);
+
+//Q11:Write a function operate that takes two numbers and a callback function as
+//arguments The callback will perform a mathematical operation (e.g., addition subtraction) on the two numbers. Define separate functions for addition and
+//subtraction, and pass them as callbacks to operate.
+
+// Function to perform mathematical operation
+function operate(num1, num2, callback) {
+    return callback(num1, num2);
+}
+
+// Addition function
+function add(a, b) {
+    return a + b;
+}
+
+// Subtraction function
+function subtract(a, b) {
+    return a - b;
+}
+
+// Test the operate function with addition and subtraction
+const resultAdd = operate(10, 5, add);
+const resultSubtract = operate(10, 5, subtract);
+
+console.log("Addition Result:", resultAdd); // 15
+console.log("Subtraction Result:", resultSubtract); // 5
+
+//Q12:12.Use setTimeout to create a function that prints "Hello, World!" after a delay of 3 seconds.
+
+// Function to print "Hello, World!" after 3 seconds
+setTimeout(() => {
+    console.log("Hello, World!");
+}, 3000); // 3000 milliseconds = 3 seconds
+
+
+//Q13: 13.Use setInterval to create a function that logs the current time every 2 seconds. After 10 seconds, clear the interval.
+
+// Function to log the current time every 2 seconds
+const intervalId = setInterval(() => {
+    const currentTime = new Date().toLocaleTimeString(); // Get current time as a string
+    console.log(currentTime);
+}, 2000); // 2000 milliseconds = 2 seconds
+
+// Clear the interval after 10 seconds
+setTimeout(() => {
+    clearInterval(intervalId);
+    console.log("Interval cleared after 10 seconds");
+}, 10000); // 10000 milliseconds = 10 seconds
+
+
+//Q14:14.Create a function fetchData that returns a promise. Inside the function, use
+//setTimeout to simulate a network request that resolves with a message ("Data
+//received!") after 2 seconds. Then, call fetchData and handle the response with
+//.then() and .catch().
+
+// Function that returns a promise simulating a network request
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const success = true; // Simulate success or failure
+
+            if (success) {
+                resolve("Data received!"); // Resolve with a success message after 2 seconds
+            } else {
+                reject("Error: Data not received!"); // Reject with an error message
+            }
+        }, 2000); // 2 seconds delay
+    });
+}
+
+// Call fetchData and handle the response
+fetchData()
+    .then((message) => {
+        console.log(message); // Log success message
+    })
+    .catch((error) => {
+        console.error(error); // Log error message
+    });
+
+
+//Q15:15.Rewrite the fetchData function (from Question 5) using async and await.Call this new function and log the result.
+
+// Async function that simulates a network request
+async function fetchData() {
+    // Simulating a delay with setTimeout wrapped in a Promise
+    const result = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const success = true; // Simulate success or failure
+
+            if (success) {
+                resolve("Data received!"); // Resolve with success message
+            } else {
+                reject("Error: Data not received!"); // Reject with error message
+            }
+        }, 2000); // 2 seconds delay
+    });
+
+    return result;
+}
+
+// Calling the async function
+async function callFetchData() {
+    try {
+        const result = await fetchData(); // Await the result of fetchData
+        console.log(result); // Log the success message
+    } catch (error) {
+        console.error(error); // Log any error if the promise is rejected
+    }
+}
+
+// Call the function
+callFetchData();
+
+//Q16:16.Write a function that accepts two parameters, base and exponent, and uses the exponentiation operator (**) to calculate and return the result. Test this function with different values.
+
+// Function to calculate base raised to the power of exponent
+function power(base, exponent) {
+    return base ** exponent;
+}
+
+// Test the function with different values
+console.log(power(2, 3));  // 2^3 = 8
+console.log(power(5, 2));  // 5^2 = 25
+console.log(power(7, 0));  // 7^0 = 1
+console.log(power(10, -2)); // 10^(-2) = 0.01
+
+//Q17:17.Define a class Animal with a constructor that accepts name and species. Add a method speak that logs a message like "Dog says Woof!" Create instances of this class with different animals and call the speak method for each.
+
+// Define the Animal class
+class Animal {
+    // Constructor to initialize name and species
+    constructor(name, species) {
+        this.name = name;
+        this.species = species;
+    }
+
+    // Method to log a message based on the species
+    speak() {
+        let sound;
+        switch (this.species.toLowerCase()) {
+            case 'dog':
+                sound = 'Woof!';
+                break;
+            case 'cat':
+                sound = 'Meow!';
+                break;
+            case 'cow':
+                sound = 'Moo!';
+                break;
+            default:
+                sound = 'Some sound';
+        }
+        console.log(`the ${this.species} says ${sound}`);
+    }
+}
+
+// Create instances of the Animal class
+ const dog = new Animal('Rex', 'Dog');
+ const cat = new Animal('Whiskers', 'Cat');
+ const cow = new Animal('Bessie', 'Cow');
+
+// Call the speak method for each animal
+dog.speak();  // Rex the Dog says Woof!
+cat.speak();  // Whiskers the Cat says Meow!
+cow.speak();  // Bessie the Cow says Moo!
+
+//Q18:Create a function that checks if a number is even or odd using the ternary operator. The function should return "Even" if the number is even and "Odd"if it is odd. Test the function with various numbers.
+
+// Function to check if a number is even or odd using the ternary operator
+function checkEvenOdd(number) {
+    return (number % 2 === 0) ? "Even" : "Odd";
+}
+
+// Test the function with various numbers
+console.log(checkEvenOdd(4));  // Even
+console.log(checkEvenOdd(7));  // Odd
+console.log(checkEvenOdd(0));  // Even
+console.log(checkEvenOdd(13)); // Odd
+
+//Q19: Create an object user with a nested object address. The address object should have a property city. Write a function to safely log the city name using optional chaining, even if the address or city properties do not exist.
+
+// Define the user object with a nested address object
+const user = {
+    name: 'John Doe',
+    address: {
+        city: 'New York'
+    }
+};
+
+// Function to safely log the city name using optional chaining
+function logCity(user) {
+    console.log(user.address?.city ?? 'City not available');
+}
+
+// Call the function to log the city
+logCity(user); // Logs: New York
+
+// Test with a user object where the address is undefined
+const userWithoutAddress = {
+    name: 'Jane Smith'
+};
+
+logCity(userWithoutAddress); // Logs: City not available
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ </script>   
+</body>
+</html>
